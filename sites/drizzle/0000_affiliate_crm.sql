@@ -5,7 +5,7 @@ CREATE TABLE crm_leads (
   telegram TEXT NOT NULL DEFAULT '' CHECK (length(telegram) <= 80),
   phone TEXT NOT NULL DEFAULT '' CHECK (length(phone) <= 60),
   stage TEXT NOT NULL DEFAULT 'new' CHECK (stage IN ('new','contacted','courier','received','paid','lost')),
-  cards_json TEXT NOT NULL DEFAULT '[]' CHECK (json_valid(cards_json) AND json_type(cards_json) = 'array'),
+  cards_json TEXT NOT NULL DEFAULT '[]' CHECK (CASE WHEN json_valid(cards_json) THEN json_type(cards_json) = 'array' ELSE 0 END),
   next_action TEXT NOT NULL DEFAULT '' CHECK (length(next_action) <= 500),
   due_at TEXT,
   commission_kopecks INTEGER NOT NULL DEFAULT 0 CHECK (commission_kopecks >= 0 AND commission_kopecks <= 100000000000000),
