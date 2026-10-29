@@ -30,7 +30,7 @@ function htmlResponse(request) {
   const body = HTML.replace(/<(script|style)(?=[\s>])/g, '<$1 nonce="' + nonce + '"');
   const policy = "default-src 'self'; script-src 'nonce-" + nonce +
     "'; style-src 'nonce-" + nonce +
-    "'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com";
+    "'; style-src-attr 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com";
   return new Response(request.method === "HEAD" ? null : body, {
     headers: { ...BASE_HEADERS, "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": policy },
   });
