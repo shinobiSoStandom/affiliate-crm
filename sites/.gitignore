@@ -1,0 +1,11 @@
+dist/
+outputs/
+node_modules/
+.env
+.env.*
+!.env.example
+.dev.vars*
+.wrangler/
+.openai/sites-runtime/
+.openai/sites-source-*.json
+.DS_Store
