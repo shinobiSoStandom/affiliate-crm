@@ -360,6 +360,7 @@ export async function handleApi(request, env, user) {
     return await dispatchApi(request, env, user, path);
   } catch (error) {
     if (error instanceof URIError) return faultResponse(new ApiFault(400, "invalid_id", "Некорректный идентификатор."));
+    if (!(error instanceof ApiFault)) console.error("CRM storage request failed", path, error?.name || "Error");
     return faultResponse(error);
   }
 }
