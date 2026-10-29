@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
+const source = await readFile(resolve(root, "dist/server/index.js"), "utf8");
+const manifest = JSON.parse(await readFile(resolve(root, "dist/.openai/hosting.json"), "utf8"));
+assert.equal(manifest.project_id, "appgprj_6ae3254929308191aecc50dc05f85e69");
+assert.equal(manifest.d1, "DB");
+const worker = await import("data:text/javascript;base64," + Buffer.from(source).toString("base64"));
+assert.equal(typeof worker.default.fetch, "function");
+console.log("Worker module, project identity and D1 binding validated.");
